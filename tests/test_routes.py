@@ -142,7 +142,7 @@ class TestAccountService(TestCase):
         """It should return account not found"""
         resp = self.client.get(f"{BASE_URL}/0")
         assert resp.status_code == status.HTTP_404_NOT_FOUND
-    
+
     def test_list_accounts(self):
         self._create_accounts(5)
         resp = self.client.get(BASE_URL)
