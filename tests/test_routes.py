@@ -151,3 +151,21 @@ class TestAccountService(TestCase):
         account = self._create_accounts(1)[0]
         resp = self.client.delete(f"{BASE_URL}/{account.id}")
         assert resp.status_code == status.HTTP_204_NO_CONTENT
+
+    def test_update_account(self):
+        """ It shoud update an account """
+        test_account = AccountFactory()
+        resp = self.client.post(BASE_URL, json=test_account.serialize())
+        assert resp.status_code == status.HTTP_201_CREATED
+        new_account = resp.get_json()
+        new_account["name"] = "Something Known"
+        resp = self.client.put(f"{BASE_URL}/{new_account['id']}", json=new_account)
+        assert resp.status_code == status.HTTP_200_OK
+        updated_account = resp.get_json()
+        assert updated_account["name"] == "Something Known"
+
+    def test_update_404_account(self):
+        """ update should return 404"""
+        resp = self.client.put(f"{BASE_URL}/0")
+        assert resp.status_code == status.HTTP_404_NOT_FOUND
+
