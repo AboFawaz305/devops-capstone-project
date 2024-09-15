@@ -84,6 +84,7 @@ def read_acoount(id):
         abort(status.HTTP_404_NOT_FOUND, f"Account {id} not found")
     return account.serialize(), status.HTTP_200_OK
 
+
 def _read_account(id):
     account = Account.find(id)
     return account
