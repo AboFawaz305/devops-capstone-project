@@ -57,6 +57,7 @@ def create_accounts():
         jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
     )
 
+
 ######################################################################
 # LIST ALL ACCOUNTS
 ######################################################################
@@ -65,9 +66,9 @@ def list_accounts():
     """ List all accounts"""
     app.logger.info("Request list accounts")
     accounts = Account.all()
-    account_list = [a.serialize() for a in  accounts]
+    account_list = [a.serialize() for a in accounts]
     return jsonify(account_list), status.HTTP_200_OK
-    
+
 
 ######################################################################
 # READ AN ACCOUNT
@@ -80,12 +81,13 @@ def read_acoount(id):
     account = _read_account(id)
     app.logger.info("Request to read account id:%s", id)
     if not account:
-        abort(status.HTTP_404_NOT_FOUND,f"Account {id} not found")
+        abort(status.HTTP_404_NOT_FOUND, f"Account {id} not found")
     return account.serialize(), status.HTTP_200_OK
 
 def _read_account(id):
     account = Account.find(id)
     return account
+
 
 ######################################################################
 # UPDATE AN EXISTING ACCOUNT
@@ -98,7 +100,7 @@ def update_accounts(id):
     app.logger.info(f"Request to update account {id}")
     a = _read_account(id)
     if not a:
-        abort(status.HTTP_404_NOT_FOUND,"Account not found") 
+        abort(status.HTTP_404_NOT_FOUND, "Account not found")
 
     a.deserialize(request.get_json())
     a.update
