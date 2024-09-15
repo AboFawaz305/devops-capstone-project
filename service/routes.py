@@ -101,6 +101,14 @@ def _read_account(id):
 ######################################################################
 
 # ... place you code here to DELETE an account ...
+@app.route("/accounts/<int:account_id>", methods=["DELETE"])
+def delete_accounts(account_id):
+    """ delete an account """
+    app.logger.info(f"Request delete account: {account_id}")
+    a = _read_account(account_id)
+    if a:
+        a.delete
+    return "", status.HTTP_204_NO_CONTENT
 
 
 ######################################################################
