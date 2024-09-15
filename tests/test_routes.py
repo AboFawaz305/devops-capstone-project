@@ -145,3 +145,9 @@ class TestAccountService(TestCase):
         assert resp.status_code == status.HTTP_200_OK
         data = resp.get_json()
         assert len(data) == 5
+
+    def test_delete_account(self):
+        """ It should delete a account"""
+        account = self._create_accounts(1)[0]
+        resp = self.client.delete(f"{BASE_URL}/{account.id}")
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
